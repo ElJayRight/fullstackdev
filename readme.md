@@ -8,27 +8,34 @@ Everything will be able to be spun up via ansible with the build files being sto
 
 # TechStack
 Front end: Flask server
+
     This will start out as an api to help with useability focusing around a terminal using `curl`. This could later be expanded to be a full website after a working beta is built
 
 Database: MySQL
+
     As the database will grow rapidly with each file added MySQL seems to be the right pick over sqlite3. There will be strict access to the database, as only the flask apis need to access it. The ability to add a file will also be done via a PUT request.
 
 Codebase: GitLab Server
+
     Due to familarity with the application it will be used to store the logic for the runners and code. The user will also be able to add project repos to this server, with artifact lifetime monitored to keep storage size at a minimum.
 
 Compile server: Windows Server 2022
+
     This should be a standalone server running multiple docker containers designed to complie project code. These containers are not perminate and will be deleted once the artifacts are generated.
 
 Analysis container: Running on compile server.
+
     There will be a seperate container that will anaylse the compiled sample against threatcheck and return the results as outlined above.
 
 # Project Timeline
 ## Stage 1
 Functioning Flask API and MySQL Server with the ability to view and add data.
+
 Ansible scripts should also be created.
 
 ## Stage 2
 Completed GitLab server with compile and analysis containers created.
+
 Ansible and gitlab runner configs should be created.
 
 ## Stage 3
@@ -36,6 +43,12 @@ Create a working pipeline that will input a repo and output information on the c
 
 ## Stage 4
 Build out the flask frontend and stream line the creation of repos utilising the data stored in the database. (To be discussed at a later )
+
+
+# Git Strategy
+Each new feature shall be added as a feature branch, then merged with dev.
+
+Once we validate there are no issues with the merge it shall be pushed to main.
 
 # Future Ideas
 
