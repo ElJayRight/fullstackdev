@@ -25,18 +25,26 @@ def add_record(method, language, code_file):
     conn.commit()
     cursor.close()
 
-def get_data(method, language=None):
+def get_data(method=None, language=None):
     cursor = conn.cursor()
     if not is_in_db(method, language):
         return None
-    if language:
-        cursor.execute("select file_name from methods where method_name = ? and language = ?", (method, language))
-        result = cursor.fetchone()
-        result = result[0]
+        
+    if method:
+        if language:
+            cursor.execute("select file_name from methods where method_name = ? and language = ?", (method, language))
+            result = cursor.fetchone()
+            result = result[0]
+    
+        else:
+            cursor.execute("select language from methods where method_name = ?", (method, ))
+            result = cursor.fetchall()
+            result = [i[0] for i in result]
     else:
-        cursor.execute("select language from methods where method_name = ?", (method, ))
+        cursor.execute("select method_name from methods")
         result = cursor.fetchall()
         result = [i[0] for i in result]
+
     if result:
         return result
     return False 
