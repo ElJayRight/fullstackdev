@@ -20,7 +20,7 @@ def add_record(method, language, code_file):
     if is_in_db(method, language):
         return
     cursor = conn.cursor()
-    cursor.execute('''INSERT INTO methods (method_name, language, code)
+    cursor.execute('''INSERT INTO methods (method_name, language, file_name)
                    VALUES (?, ?, ?)''', (method, language, code_file))
     conn.commit()
     cursor.close()
@@ -30,7 +30,7 @@ def get_data(method, language=None):
     if not is_in_db(method, language):
         return None
     if language:
-        cursor.execute("select code from methods where method_name = ? and language = ?", (method, language))
+        cursor.execute("select file_name from methods where method_name = ? and language = ?", (method, language))
         result = cursor.fetchone()
         result = result[0]
     else:
@@ -48,7 +48,7 @@ def build():
                    id INTEGER PRIMARY KEY,
                    method_name TEXT NOT NULL,
                    language TEXT NOT NULL,
-                   code TEXT NOT NULL
+                   file_name TEXT NOT NULL
                 )''')
 
     conn.commit()
